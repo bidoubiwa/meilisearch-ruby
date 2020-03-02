@@ -8,7 +8,7 @@ RSpec.describe MeiliSearch::Index::Documents do
   end
 
   after(:all) do
-    # @index.delete
+    @index.delete
   end
 
   let(:documents) do
