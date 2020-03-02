@@ -187,24 +187,26 @@ index.search('prince')
 All the supported options are described in [this documentation section](https://docs.meilisearch.com/references/search.html#search-in-an-index).
 
 ```ruby
-index.search('prince', { limit: 1 })
+index.search('prince', { limit: 1, attributesToHighlight: '*' })
 ```
 
 ```json
 {
     "hits": [
         {
-            "id": 456,
-            "title": "Le Petit Prince"
+            "title": "Le Petit Prince",
+            "_formatted": {
+                "title": "Le Petit <em>Prince</em>"
+            }
         }
     ],
     "offset": 0,
     "limit": 1,
-    "processingTimeMs": 10,
+    "processingTimeMs": 0,
     "query": "prince"
 }
 ```
 
 ## 🤖 Compatibility with MeiliSearch
 
-This gem works for MeiliSearch `v0.8.x`.
+This gem works for MeiliSearch `v0.9.x`.
