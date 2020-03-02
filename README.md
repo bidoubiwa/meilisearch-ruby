@@ -54,8 +54,8 @@ NB: you can also download MeiliSearch from **Homebrew** or **APT**.
 require 'meilisearch'
 
 client = MeiliSearch::Client.new('url', 'apiKey')
-index = client.create_index(name: 'Books', uid: 'books') # If your index does not exist
-index = client.index('books')                            # If you already created your index
+index = client.create_index('books') # If your index does not exist
+index = client.index('books')             # If you already created your index
 
 documents = [
   { id: 123,  title: 'Pride and Prejudice' },
@@ -99,15 +99,9 @@ You can check out [the API documentation](https://docs.meilisearch.com/reference
 #### Create an index <!-- omit in toc -->
 ```ruby
 # Create an index
-client.create_index('Books')
-# Create an index with a specific uid (uid must be unique)
-client.create_index(name: 'Books', uid: 'books')
-# Create an index with a schema
-schema = {
-  id:    [:displayed, :indexed, :identifier],
-  title: [:displayed, :indexed]
-}
-client.create_index(name: 'Books', schema: schema)
+client.create_index('books')
+# Create an index and give the identifier attribute
+client.create_index(uid: 'books', identifier: 'objectID')
 ```
 
 #### List all indexes <!-- omit in toc -->
@@ -117,7 +111,7 @@ client.indexes
 
 #### Get an index object <!-- omit in toc -->
 ```ruby
-client.index('indexUid')
+client.index('books')
 ```
 
 ### Documents
@@ -149,7 +143,7 @@ index.delete_document(2)
 # Delete several documents
 index.delete_documents([1, 42])
 # Delete all documents /!\
-index.clear_documents
+index.delete_all_documents
 ```
 
 ### Update status
