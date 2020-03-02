@@ -12,16 +12,14 @@ module MeiliSearch
       end
 
       # Usage:
-      # create_index('name')
-      # create_index(name: 'name')
-      # create_index(name: 'name', uid: 'uid')
-      # create_index(name: 'name', schema: {...})
-      # create_index(name: 'name', uid: 'uid', schema: {...})
+      # create_index('indexUID')
+      # create_index(uid: 'indexUID')
+      # create_index(uid: 'indexUID', identifier: 'id')
       def create_index(attributes)
         body = if attributes.is_a?(Hash)
                  attributes
                else
-                 { name: attributes }
+                 { uid: attributes }
                end
         res = http_post '/indexes', body
         index_object(res['uid'])
@@ -32,10 +30,8 @@ module MeiliSearch
       end
 
       # Usage:
-      # index('uid')
-      # index(uid: 'uid')
-      # index(name: 'name') => WARNING: the name of an index is not guaranteed to be unique. This method will return the first occurrence. We recommend using the index uid instead.
-      # index(uid: 'uid', name: 'name') => only the uid field will be taken into account.
+      # index('indexUID')
+      # index(uid: 'indexUID')
       def index(identifier)
         uid = index_uid(identifier)
         raise IndexIdentifierError if uid.nil?
@@ -51,20 +47,7 @@ module MeiliSearch
       end
 
       def index_uid(identifier)
-        if identifier.is_a?(Hash)
-          identifier[:uid] || index_uid_from_name(identifier)
-        else
-          identifier
-        end
-      end
-
-      def index_uid_from_name(identifier)
-        index = indexes.find { |i| i['name'] == identifier[:name] }
-        if index.nil?
-          nil
-        else
-          index['uid']
-        end
+        identifier.is_a?(Hash) ? identifier[:uid] : identifier
       end
     end
   end

@@ -109,7 +109,7 @@ RSpec.configure do |config|
 
   # Globals for all tests
   $URL = 'http://localhost:7700'
-  $API_KEY = 'apiKey'
+  $API_KEY = 'masterKey'
 
   # Helpers
   config.include IndexesHelpers
