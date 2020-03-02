@@ -3,11 +3,12 @@
 RSpec.describe MeiliSearch::Index::Documents do
   before(:all) do
     client = MeiliSearch::Client.new($URL, $API_KEY)
-    @index = client.create_index(name: 'Books')
+    clear_all_indexes(client)
+    @index = client.create_index('books')
   end
 
   after(:all) do
-    @index.delete
+    # @index.delete
   end
 
   let(:documents) do
@@ -30,11 +31,13 @@ RSpec.describe MeiliSearch::Index::Documents do
     expect(@index.documents.count).to eq(documents.count)
   end
 
-  it 'infers the schema' do
-    response = @index.schema
-    expect(response).to have_key('objectId')
-    expect(response).to have_key('title')
-    expect(response).to have_key('comment')
+  it 'infers order of fields' do
+    response = @index.document(1)
+    expect(response.keys).to eq(['objectId', 'title', 'comment'])
+  end
+
+  it 'infers identifier attribute' do
+    expect(@index.show['identifier']).to eq('objectId')
   end
 
   it 'gets one document from its identifier' do
@@ -109,26 +112,23 @@ RSpec.describe MeiliSearch::Index::Documents do
     sleep(0.1)
   end
 
-  it 'adds a document with fields unknown by the schema (these fields are ignored)' do
-    id = 30
-    title = 'Ulysses'
-    new_doc = { objectId: id, title: title, note: '8/10' }
-    response = @index.add_documents(new_doc)
+  it 'update a document with new fields' do
+    id = 2
+    doc = { objectId: id, note: '8/10' }
+    response = @index.update_documents(doc)
     sleep(0.1)
     expect(response).to be_a(Hash)
     expect(response).to have_key('updateId')
-    expect(@index.documents.count).to eq(documents.count + 1)
+    expect(@index.documents.count).to eq(documents.count)
     new_document = @index.document(id)
-    expect(new_document['title']).to eq(title)
-    expect(new_document).not_to have_key('note')
-    @index.delete_document(id)
-    sleep(0.1)
+    expect(new_document['title']).to eq(documents.detect { |doc| doc[:objectId] == id }[:title])
+    expect(new_document).to have_key('note')
   end
 
   it 'replaces document' do
     id = 123
     new_title = 'Pride & Prejudice'
-    response = @index.replace_documents(objectId: id, title: 'Pride & Prejudice')
+    response = @index.replace_documents(objectId: id, title: 'Pride & Prejudice', note: '8.5/10')
     expect(response).to be_a(Hash)
     expect(response).to have_key('updateId')
     sleep(0.1)
@@ -136,6 +136,7 @@ RSpec.describe MeiliSearch::Index::Documents do
     doc = @index.document(id)
     expect(doc['title']).to eq(new_title)
     expect(doc).not_to have_key('comment')
+    expect(doc).to have_key('note')
   end
 
   it 'deletes one document from index' do
@@ -158,7 +159,7 @@ RSpec.describe MeiliSearch::Index::Documents do
     expect { @index.document(id) }.to raise_meilisearch_http_error_with(404)
   end
 
-  it 'deletes one document from index (with delete_multiple_documents routes)' do
+  it 'deletes one document from index (with delete-batch route)' do
     id = 2
     response = @index.delete_documents(id)
     sleep(0.1)
@@ -168,7 +169,7 @@ RSpec.describe MeiliSearch::Index::Documents do
     expect { @index.document(id) }.to raise_meilisearch_http_error_with(404)
   end
 
-  it 'deletes one document from index (with delete_multiple_documents routes as an array of one uid)' do
+  it 'deletes one document from index (with delete-batch route as an array of one uid)' do
     id = 123
     response = @index.delete_documents([id])
     sleep(0.1)
@@ -188,12 +189,24 @@ RSpec.describe MeiliSearch::Index::Documents do
   end
 
   it 'clears all documents from index' do
-    response = @index.clear_documents
+    response = @index.delete_all_documents
     sleep(0.1)
     expect(response).to be_a(Hash)
     expect(response).to have_key('updateId')
     expect(@index.documents).to be_empty
     expect(@index.documents.size).to eq(0)
+  end
+
+  it 'fails to add document with bad identifier format' do
+    res = @index.add_documents({ objectId: 'toto et titi', title: 'Unknown' })
+    sleep(0.1)
+    expect(@index.get_update_status(res['updateId'])['status']).to eq('failed')
+  end
+
+  it 'fails to add document with no identifier' do
+    res = @index.add_documents({ id: 0, title: 'Unknown' })
+    sleep(0.1)
+    expect(@index.get_update_status(res['updateId'])['status']).to eq('failed')
   end
 
   it 'works with method aliases' do
@@ -203,7 +216,6 @@ RSpec.describe MeiliSearch::Index::Documents do
     expect(@index.method(:add_documents) == @index.method(:add_or_replace_documents)).to be_truthy
     expect(@index.method(:add_documents) == @index.method(:replace_documents)).to be_truthy
     expect(@index.method(:update_documents) == @index.method(:add_or_update_documents)).to be_truthy
-    expect(@index.method(:clear_documents) == @index.method(:clear_all_documents)).to be_truthy
     expect(@index.method(:delete_documents) == @index.method(:delete_multiple_documents)).to be_truthy
     expect(@index.method(:delete_document) == @index.method(:delete_one_document)).to be_truthy
   end
