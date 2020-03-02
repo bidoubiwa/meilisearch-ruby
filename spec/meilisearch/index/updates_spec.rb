@@ -11,7 +11,8 @@ RSpec.describe MeiliSearch::Index::Updates do
       { objectId: 42,   title: 'The Hitchhiker\'s Guide to the Galaxy' }
     ]
     client = MeiliSearch::Client.new($URL, $API_KEY)
-    @index = client.create_index('Index name')
+    clear_all_indexes(client)
+    @index = client.create_index(uid: 'books', identifier: 'objectId')
   end
 
   after(:all) do
@@ -38,6 +39,6 @@ RSpec.describe MeiliSearch::Index::Updates do
   it 'gets all the update status' do
     response = @index.get_all_update_status
     expect(response).to be_a(Array)
-    expect(response.count).to eq(2) # DocumentionAddition + Schema
+    expect(response.count).to eq(1)
   end
 end
