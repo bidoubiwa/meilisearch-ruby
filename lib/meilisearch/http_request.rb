@@ -27,20 +27,16 @@ module MeiliSearch
     end
 
     def http_post(path = '', body = nil)
-      response = if body.nil?
-                   self.class.post(
-                     @base_url + path,
-                     headers: @headers,
-                     timeout: 1
-                   )
-                 else
-                   self.class.post(
-                     @base_url + path,
-                     body: body.to_json,
-                     headers: @headers,
-                     timeout: 1
-                   )
-                 end
+      body = body.to_json unless body.nil?
+      params = {
+        body: body,
+        headers: @headers,
+        timeout: 1
+      }.compact
+      response = self.class.post(
+        @base_url + path,
+        params
+      )
       validate(response)
     end
 

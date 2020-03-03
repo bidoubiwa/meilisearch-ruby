@@ -3,7 +3,6 @@
 module MeiliSearch
   class Index < HTTPRequest
     module Settings
-
       # General routes
       def settings
         http_get "/indexes/#{@uid}/settings"
@@ -83,7 +82,6 @@ module MeiliSearch
       def update_accept_new_fields(accept_new_fields)
         http_post "/indexes/#{@uid}/settings/accept-new-fields", accept_new_fields
       end
-
     end
   end
 end
