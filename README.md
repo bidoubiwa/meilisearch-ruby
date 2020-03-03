@@ -41,7 +41,7 @@ There are many easy ways to [download and run a MeiliSearch instance](https://do
 
 For example, if you use Docker:
 ```bash
-$ docker run -it --rm -p 7700:7700 getmeili/meilisearch:latest --api-key=apiKey
+$ docker run -it --rm -p 7700:7700 getmeili/meilisearch:latest --master-key=masterKey
 ```
 
 NB: you can also download MeiliSearch from **Homebrew** or **APT**.
@@ -53,9 +53,9 @@ NB: you can also download MeiliSearch from **Homebrew** or **APT**.
 ```ruby
 require 'meilisearch'
 
-client = MeiliSearch::Client.new('url', 'apiKey')
+client = MeiliSearch::Client.new('http://127.0.0.1:7700/', 'masterKey')
 index = client.create_index('books') # If your index does not exist
-index = client.index('books')             # If you already created your index
+index = client.index('books')        # If you already created your index
 
 documents = [
   { id: 123,  title: 'Pride and Prejudice' },
