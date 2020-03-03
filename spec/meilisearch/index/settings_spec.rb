@@ -25,12 +25,12 @@ RSpec.describe MeiliSearch::Index::Settings do
   let(:settings_keys) {
     [
       'rankingRules',
-        'distinctAttribute',
-        'searchableAttributes',
-        'displayedAttributes',
-        'stopWords',
-        'synonyms',
-        'acceptNewFields'
+      'distinctAttribute',
+      'searchableAttributes',
+      'displayedAttributes',
+      'stopWords',
+      'synonyms',
+      'acceptNewFields'
     ]
   }
 
@@ -152,7 +152,6 @@ RSpec.describe MeiliSearch::Index::Settings do
       sleep(0.1)
       expect(@index.get_update_status(response['updateId'])['status']).to eq('processed')
     end
-
   end
 
   context 'On displayed-attributes sub-routes' do
@@ -189,7 +188,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       sleep(0.1)
       @index.update_displayed_attributes(['title', 'description'])
       sleep(0.1)
-      @index.add_documents({id: 1, title: 'Test', comment: 'comment test'})
+      @index.add_documents({ id: 1, title: 'Test', comment: 'comment test' })
       sleep(0.1)
       sa = @index.searchable_attributes
       da = @index.displayed_attributes
@@ -215,7 +214,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       sleep(0.1)
       @index.update_displayed_attributes(['title', 'description'])
       sleep(0.1)
-      @index.add_documents({id: 1, title: 'Test', comment: 'comment test'})
+      @index.add_documents({ id: 1, title: 'Test', comment: 'comment test' })
       sleep(0.1)
       sa = @index.searchable_attributes
       da = @index.displayed_attributes

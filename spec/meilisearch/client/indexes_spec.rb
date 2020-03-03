@@ -31,7 +31,6 @@ RSpec.describe MeiliSearch::Client::Indexes do
     expect(index.identifier).to eq(@identifier)
   end
 
-
   it 'fails to create an index with an uid already taken' do
     expect do
       @client.create_index(@uid1)

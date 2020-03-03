@@ -13,9 +13,9 @@ RSpec.describe MeiliSearch::Index::Synonyms do
 
   let(:synonyms) do
     {
-      wow:       ['world of warcraft'],
+      wow: ['world of warcraft'],
       wolverine: ['xmen', 'logan'],
-      logan:     ['wolverine', 'xmen']
+      logan: ['wolverine', 'xmen']
     }
   end
 
