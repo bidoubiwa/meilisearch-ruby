@@ -293,6 +293,17 @@ RSpec.describe MeiliSearch::Index::Settings do
       sleep(0.1)
       expect(@index.get_update_status(response['updateId'])['status']).to eq('processed')
     end
+
+    it 'resets searchable/displayed attributes' do
+      response = @index.reset_displayed_attributes
+      expect(response).to have_key('updateId')
+      sleep(0.1)
+      expect(@index.get_update_status(response['updateId'])['status']).to eq('processed')
+      response = @index.reset_searchable_attributes
+      expect(response).to have_key('updateId')
+      sleep(0.1)
+      expect(@index.get_update_status(response['updateId'])['status']).to eq('processed')
+    end
   end
 
   it 'works with method aliases' do
