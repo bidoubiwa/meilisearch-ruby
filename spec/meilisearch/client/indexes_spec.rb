@@ -38,6 +38,12 @@ RSpec.describe MeiliSearch::Client::Indexes do
     end.to raise_meilisearch_http_error_with(400)
   end
 
+  it 'fails to create an index with bad UID format' do
+    expect do
+      @client.create_index('two words')
+    end.to raise_meilisearch_http_error_with(400)
+  end
+
   it 'gets list of indexes' do
     response = @client.indexes
     expect(response).to be_a(Array)
