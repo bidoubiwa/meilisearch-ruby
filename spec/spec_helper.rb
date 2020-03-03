@@ -113,6 +113,5 @@ RSpec.configure do |config|
 
   # Helpers
   config.include IndexesHelpers
-  config.include KeysHelpers
   config.include ExceptionsHelpers
 end
