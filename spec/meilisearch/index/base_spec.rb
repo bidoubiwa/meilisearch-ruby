@@ -42,9 +42,9 @@ RSpec.describe MeiliSearch::Index::Base do
 
   it 'returns error if trying to update identifier if it is already defined' do
     new_identifier = 'id_test'
-    expect {
+    expect do
       @index2.update(identifier: new_identifier)
-    }.to raise_meilisearch_http_error_with(400)
+    end.to raise_meilisearch_http_error_with(400)
   end
 
   it 'deletes index' do

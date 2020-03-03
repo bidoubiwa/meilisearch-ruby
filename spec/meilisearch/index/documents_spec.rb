@@ -121,7 +121,7 @@ RSpec.describe MeiliSearch::Index::Documents do
     expect(response).to have_key('updateId')
     expect(@index.documents.count).to eq(documents.count)
     new_document = @index.document(id)
-    expect(new_document['title']).to eq(documents.detect { |doc| doc[:objectId] == id }[:title])
+    expect(new_document['title']).to eq(documents.detect { |d| d[:objectId] == id }[:title])
     expect(new_document).to have_key('note')
   end
 
@@ -198,13 +198,13 @@ RSpec.describe MeiliSearch::Index::Documents do
   end
 
   it 'fails to add document with bad identifier format' do
-    res = @index.add_documents({ objectId: 'toto et titi', title: 'Unknown' })
+    res = @index.add_documents(objectId: 'toto et titi', title: 'Unknown')
     sleep(0.1)
     expect(@index.get_update_status(res['updateId'])['status']).to eq('failed')
   end
 
   it 'fails to add document with no identifier' do
-    res = @index.add_documents({ id: 0, title: 'Unknown' })
+    res = @index.add_documents(id: 0, title: 'Unknown')
     sleep(0.1)
     expect(@index.get_update_status(res['updateId'])['status']).to eq('failed')
   end

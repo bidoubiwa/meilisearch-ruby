@@ -11,7 +11,7 @@ RSpec.describe MeiliSearch::Index::Settings do
     @index.delete
   end
 
-  let(:default_ranking_rules) {
+  let(:default_ranking_rules) do
     [
       'typo',
       'words',
@@ -20,9 +20,9 @@ RSpec.describe MeiliSearch::Index::Settings do
       'wordsPosition',
       'exactness'
     ]
-  }
+  end
 
-  let(:settings_keys) {
+  let(:settings_keys) do
     [
       'rankingRules',
       'distinctAttribute',
@@ -32,7 +32,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       'synonyms',
       'acceptNewFields'
     ]
-  }
+  end
 
   context 'On global settings routes' do
     it 'gets default values of settings' do
@@ -188,7 +188,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       sleep(0.1)
       @index.update_displayed_attributes(['title', 'description'])
       sleep(0.1)
-      @index.add_documents({ id: 1, title: 'Test', comment: 'comment test' })
+      @index.add_documents(id: 1, title: 'Test', comment: 'comment test')
       sleep(0.1)
       sa = @index.searchable_attributes
       da = @index.displayed_attributes
@@ -214,7 +214,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       sleep(0.1)
       @index.update_displayed_attributes(['title', 'description'])
       sleep(0.1)
-      @index.add_documents({ id: 1, title: 'Test', comment: 'comment test' })
+      @index.add_documents(id: 1, title: 'Test', comment: 'comment test')
       sleep(0.1)
       sa = @index.searchable_attributes
       da = @index.displayed_attributes
@@ -280,7 +280,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @index.update_searchable_attributes([])
       @index.update_displayed_attributes([])
       sleep(0.1)
-      response = @index.add_documents({ title: 'Test' })
+      response = @index.add_documents(title: 'Test')
       sleep(0.1)
       expect(@index.get_update_status(response['updateId'])['status']).to eq('failed')
     end
@@ -289,7 +289,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @index.update_searchable_attributes([])
       @index.update_displayed_attributes([])
       sleep(0.1)
-      response = @index.add_documents({ objectId: 1, title: 'Test' })
+      response = @index.add_documents(objectId: 1, title: 'Test')
       sleep(0.1)
       expect(@index.get_update_status(response['updateId'])['status']).to eq('processed')
     end
