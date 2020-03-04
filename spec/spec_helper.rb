@@ -22,7 +22,7 @@ require 'simplecov'
 
 SimpleCov.start
 
-Dir["#{Dir.pwd}/spec/support/**/*.rb"].each { |file| require file }
+Dir["#{Dir.pwd}/spec/support/**/*.rb"].sort.each { |file| require file }
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
