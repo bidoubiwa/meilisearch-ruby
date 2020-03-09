@@ -47,8 +47,6 @@ RSpec.describe MeiliSearch::Index::StopWords do
     expect { @index.update_stop_words(test: 'test') }.to raise_meilisearch_http_error_with(400)
   end
 
-
-
   it 'resets stop-words' do
     response = @index.reset_stop_words
     expect(response).to be_a(Hash)
