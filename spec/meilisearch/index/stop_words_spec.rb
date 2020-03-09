@@ -20,32 +20,37 @@ RSpec.describe MeiliSearch::Index::StopWords do
     expect(response).to be_empty
   end
 
-  it 'overwrites stop-words when the body is valid (as an array)' do
+  it 'updates stop-words when the body is valid (as an array)' do
     response = @index.update_stop_words(stop_words_array)
     expect(response).to be_a(Hash)
     expect(response).to have_key('updateId')
     sleep(0.1)
   end
 
-  it 'overwrites stop-words when the body is valid (as single string)' do
+  it 'gets list of stop-words' do
+    response = @index.stop_words
+    expect(response).to be_a(Array)
+    expect(response).to contain_exactly(*stop_words_array)
+  end
+
+  it 'updates stop-words when the body is valid (as single string)' do
     response = @index.update_stop_words(stop_words_string)
     expect(response).to be_a(Hash)
     expect(response).to have_key('updateId')
     sleep(0.1)
+    sw = @index.stop_words
+    expect(sw).to be_a(Array)
+    expect(sw).to contain_exactly(stop_words_string)
   end
 
   it 'returns an error when the body is invalid' do
     expect { @index.update_stop_words(test: 'test') }.to raise_meilisearch_http_error_with(400)
   end
 
-  it 'gets list of stop-words' do
-    response = @index.stop_words
-    expect(response).to be_a(Array)
-    expect(response).to contain_exactly(*stop_words_array, stop_words_string)
-  end
 
-  it 'resets stop_words' do
-    response = @index.reset_stop_words(stop_words_array)
+
+  it 'resets stop-words' do
+    response = @index.reset_stop_words
     expect(response).to be_a(Hash)
     expect(response).to have_key('updateId')
     sleep(0.1)

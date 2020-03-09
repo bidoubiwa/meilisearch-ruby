@@ -23,7 +23,7 @@ RSpec.describe MeiliSearch::Client do
     end
 
     it 'has access to others routes' do
-      expect(client.keys).to be_empty
+      expect(client.keys.keys).to contain_exactly('private', 'public')
     end
   end
 
