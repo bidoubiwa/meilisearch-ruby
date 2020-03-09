@@ -7,28 +7,28 @@ RSpec.describe MeiliSearch::Client::Indexes do
     @uid1 = 'uid1'
     @uid2 = 'uid2'
     @uid3 = 'uid3'
-    @identifier = 'objectId'
+    @primary_key = 'objectId'
   end
 
-  it 'creates an index without identifier' do
+  it 'creates an index without primary-key' do
     index = @client.create_index(@uid1)
     expect(index).to be_a(MeiliSearch::Index)
     expect(index.uid).to eq(@uid1)
-    expect(index.identifier).to be_nil
+    expect(index.primary_key).to be_nil
   end
 
-  it 'creates an index without identifier as an Hash' do
+  it 'creates an index without primary-key as an Hash' do
     index = @client.create_index(uid: @uid2)
     expect(index).to be_a(MeiliSearch::Index)
     expect(index.uid).to eq(@uid2)
-    expect(index.identifier).to be_nil
+    expect(index.primary_key).to be_nil
   end
 
-  it 'creates an index with identifier' do
-    index = @client.create_index(uid: @uid3, identifier: @identifier)
+  it 'creates an index with primary-key' do
+    index = @client.create_index(uid: @uid3, primaryKey: @primary_key)
     expect(index).to be_a(MeiliSearch::Index)
     expect(index.uid).to eq(@uid3)
-    expect(index.identifier).to eq(@identifier)
+    expect(index.primary_key).to eq(@primary_key)
   end
 
   it 'fails to create an index with an uid already taken' do
@@ -55,14 +55,14 @@ RSpec.describe MeiliSearch::Client::Indexes do
     response = @client.show_index(@uid3)
     expect(response).to be_a(Hash)
     expect(response['uid']).to eq(@uid3)
-    expect(response['identifier']).to eq(@identifier)
+    expect(response['primaryKey']).to eq(@primary_key)
   end
 
   it 'returns an index object based on uid' do
     index = @client.index(@uid3)
     expect(index).to be_a(MeiliSearch::Index)
     expect(index.uid).to eq(@uid3)
-    expect(index.identifier).to eq(@identifier)
+    expect(index.primary_key).to eq(@primary_key)
   end
 
   it 'deletes index' do

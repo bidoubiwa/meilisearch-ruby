@@ -14,7 +14,7 @@ module MeiliSearch
       # Usage:
       # create_index('indexUID')
       # create_index(uid: 'indexUID')
-      # create_index(uid: 'indexUID', identifier: 'id')
+      # create_index(uid: 'indexUID', primaryKey: 'id')
       def create_index(attributes)
         body = if attributes.is_a?(Hash)
                  attributes
@@ -32,9 +32,9 @@ module MeiliSearch
       # Usage:
       # index('indexUID')
       # index(uid: 'indexUID')
-      def index(identifier)
-        uid = index_uid(identifier)
-        raise IndexIdentifierError if uid.nil?
+      def index(attribute)
+        uid = attribute.is_a?(Hash) ? attribute[:uid] : attribute
+        raise IndexUidError if uid.nil?
 
         index_object(uid)
       end
@@ -44,10 +44,6 @@ module MeiliSearch
 
       def index_object(uid)
         Index.new(uid, @base_url, @api_key)
-      end
-
-      def index_uid(identifier)
-        identifier.is_a?(Hash) ? identifier[:uid] : identifier
       end
     end
   end

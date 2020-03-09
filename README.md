@@ -100,8 +100,8 @@ You can check out [the API documentation](https://docs.meilisearch.com/reference
 ```ruby
 # Create an index
 client.create_index('books')
-# Create an index and give the identifier attribute
-client.create_index(uid: 'books', identifier: 'objectID')
+# Create an index and give the primary-key
+client.create_index(uid: 'books', primaryKey: 'objectID')
 ```
 
 #### List all indexes <!-- omit in toc -->

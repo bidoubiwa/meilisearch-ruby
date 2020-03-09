@@ -223,8 +223,8 @@ RSpec.describe MeiliSearch::Index::Settings do
     end
   end
 
-  context 'Index with identifier' do
-    let(:index_with_id) { client.create_index(uid: 'indexUID', identifier: 'id') }
+  context 'Index with primary-key' do
+    let(:index_with_id) { client.create_index(uid: 'indexUID', primaryKey: 'id') }
 
     it 'gets the default values of settings' do
       response = index_with_ids.settings
@@ -275,7 +275,7 @@ RSpec.describe MeiliSearch::Index::Settings do
     end
   end
 
-  context 'Manipulation of searchable/displayed attributes with the identifier' do
+  context 'Manipulation of searchable/displayed attributes with the primary-key' do
     it 'does not add document when there is no id' do
       @index.update_searchable_attributes([])
       @index.update_displayed_attributes([])

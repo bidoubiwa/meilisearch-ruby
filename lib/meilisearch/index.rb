@@ -28,9 +28,9 @@ module MeiliSearch
       super(url, api_key)
     end
 
-    def identifier
-      show['identifier']
+    def primary_key
+      show['primaryKey']
     end
-    alias get_identifier identifier
+    alias get_primary_key primary_key
   end
 end

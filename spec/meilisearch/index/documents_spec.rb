@@ -36,11 +36,11 @@ RSpec.describe MeiliSearch::Index::Documents do
     expect(response.keys).to eq(['objectId', 'title', 'comment'])
   end
 
-  it 'infers identifier attribute' do
-    expect(@index.show['identifier']).to eq('objectId')
+  it 'infers primary-key attribute' do
+    expect(@index.show['primaryKey']).to eq('objectId')
   end
 
-  it 'gets one document from its identifier' do
+  it 'gets one document from its primary-key' do
     object_id = 123
     response = @index.document(object_id)
     expect(response).to be_a(Hash)
@@ -197,13 +197,13 @@ RSpec.describe MeiliSearch::Index::Documents do
     expect(@index.documents.size).to eq(0)
   end
 
-  it 'fails to add document with bad identifier format' do
+  it 'fails to add document with bad primary-key format' do
     res = @index.add_documents(objectId: 'toto et titi', title: 'Unknown')
     sleep(0.1)
     expect(@index.get_update_status(res['updateId'])['status']).to eq('failed')
   end
 
-  it 'fails to add document with no identifier' do
+  it 'fails to add document with no primary-key' do
     res = @index.add_documents(id: 0, title: 'Unknown')
     sleep(0.1)
     expect(@index.get_update_status(res['updateId'])['status']).to eq('failed')
