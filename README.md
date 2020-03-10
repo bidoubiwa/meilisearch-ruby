@@ -19,6 +19,10 @@ Here is the [MeiliSearch documentation](https://docs.meilisearch.com/) 📖
   - [Documents](#documents)
   - [Update status](#update-status)
   - [Search](#search)
+- [⚙️ Development Workflow](#️-development-workflow)
+  - [Install dependencies](#install-dependencies)
+  - [Tests and Linter](#tests-and-linter)
+  - [Release](#release)
 - [🤖 Compatibility with MeiliSearch](#-compatibility-with-meilisearch)
 
 ## 🔧 Installation
@@ -206,6 +210,44 @@ index.search('prince', { limit: 1, attributesToHighlight: '*' })
     "query": "prince"
 }
 ```
+
+## ⚙️ Development Workflow
+
+If you want to contribute, this sections describes the steps to follow.
+
+Thank you for your interest in a MeiliSearch tool! ♥️
+
+### Install dependencies
+
+```bash
+$ bundle install
+```
+
+### Tests and Linter
+
+The PR should pass both of theses tests to be accepted.
+
+```bash
+# Tests
+$ bundle exec rspec
+# Linter
+$ bundle exec rubocop lib/ spec/
+# Linter with auto-correct
+$ bundle exec rubocop -a lib/ spec/
+```
+
+### Release
+
+MeiliSearch tools follow the [Semantic Versioning Convention](https://semver.org/).
+
+You must modify the file `lib/meilisearch/version.rb` with the right version.<br>
+
+```ruby
+VERSION = 'X.X.X'
+```
+
+Then, you must be on `master` branch and push a new tag with the right version.<br>
+A GitHub Action will be triggered and push the new gem on [RubyGems](https://rubygems.org/gems/meilisearch).
 
 ## 🤖 Compatibility with MeiliSearch
 
