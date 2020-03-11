@@ -4,7 +4,7 @@ RSpec.describe MeiliSearch::Client::Keys do
   before(:all) do
     @client = MeiliSearch::Client.new($URL, $API_KEY)
     @uid = 'uid'
-    index = @client.create_index(@uid)
+    @client.create_index(@uid)
   end
 
   it 'gets the list of keys' do

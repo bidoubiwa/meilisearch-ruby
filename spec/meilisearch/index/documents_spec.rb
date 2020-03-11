@@ -256,10 +256,10 @@ RSpec.describe MeiliSearch::Index::Documents do
 
     it 'does not take into account the new primary key' do
       response = index.update_documents({
-        unique: 3,
-        id: 1,
-        title: 'The Red and the Black'
-      }, 'id')
+                                          unique: 3,
+                                          id: 1,
+                                          title: 'The Red and the Black'
+                                        }, 'id')
       expect(response).to be_a(Hash)
       expect(response).to have_key('updateId')
       sleep(0.2)

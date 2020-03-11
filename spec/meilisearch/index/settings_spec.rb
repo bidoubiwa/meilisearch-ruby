@@ -356,9 +356,9 @@ RSpec.describe MeiliSearch::Index::Settings do
     let(:index) { @client.index(@uid) }
 
     it 'does not add document when there is no primary-key' do
-      expect {
+      expect do
         index.add_documents(title: 'Test')
-      }.to raise_meilisearch_http_error_with(400)
+      end.to raise_meilisearch_http_error_with(400)
     end
 
     it 'adds documents when there is a primary-key' do
