@@ -15,16 +15,16 @@ module MeiliSearch
       end
       alias get_documents documents
 
-      def add_documents(documents)
+      def add_documents(documents, primary_key = nil)
         documents = [documents] if documents.is_a?(Hash)
-        http_post "/indexes/#{@uid}/documents", documents
+        http_post "/indexes/#{@uid}/documents", documents, { primaryKey: primary_key }
       end
       alias replace_documents add_documents
       alias add_or_replace_documents add_documents
 
-      def update_documents(documents)
+      def update_documents(documents, primary_key = nil)
         documents = [documents] if documents.is_a?(Hash)
-        http_put "/indexes/#{@uid}/documents", documents
+        http_put "/indexes/#{@uid}/documents", documents, { primaryKey: primary_key }
       end
       alias add_or_update_documents update_documents
 
