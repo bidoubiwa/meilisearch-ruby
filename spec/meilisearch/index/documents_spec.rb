@@ -12,9 +12,7 @@ RSpec.describe MeiliSearch::Index::Documents do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:documents) do
@@ -233,9 +231,7 @@ RSpec.describe MeiliSearch::Index::Documents do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:documents) do
@@ -277,9 +273,7 @@ RSpec.describe MeiliSearch::Index::Documents do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:documents) do
@@ -321,9 +315,7 @@ RSpec.describe MeiliSearch::Index::Documents do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:documents) do
@@ -347,9 +339,7 @@ RSpec.describe MeiliSearch::Index::Documents do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:documents) do
@@ -367,9 +357,7 @@ RSpec.describe MeiliSearch::Index::Documents do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:documents) do

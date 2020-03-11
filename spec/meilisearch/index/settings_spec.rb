@@ -35,9 +35,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
 
@@ -96,9 +94,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:ranking_rules) { ['asc(title)', 'words', 'typo'] }
@@ -129,9 +125,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:distinct_attribute) { 'title' }
@@ -162,9 +156,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:searchable_attributes) { ['title', 'description'] }
@@ -196,9 +188,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
     let(:displayed_attributes) { ['title', 'description'] }
@@ -230,9 +220,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
 
@@ -288,9 +276,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @client.create_index(uid: @uid, primaryKey: 'id')
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
 
@@ -349,9 +335,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
 
@@ -386,9 +370,7 @@ RSpec.describe MeiliSearch::Index::Settings do
       @client.create_index(@uid)
     end
 
-    after(:all) do
-      clear_all_indexes(@client)
-    end
+    after(:all) { clear_all_indexes(@client) }
 
     let(:index) { @client.index(@uid) }
 
