@@ -98,6 +98,7 @@ RSpec.describe MeiliSearch::Index::Settings do
 
     let(:index) { @client.index(@uid) }
     let(:ranking_rules) { ['asc(title)', 'words', 'typo'] }
+    let(:wrong_ranking_rules) { ['asc(title)', 'typos'] }
 
     it 'gets default values of ranking rules' do
       response = index.ranking_rules
@@ -109,6 +110,12 @@ RSpec.describe MeiliSearch::Index::Settings do
       expect(response).to have_key('updateId')
       sleep(0.1)
       expect(index.ranking_rules).to eq(ranking_rules)
+    end
+
+    it 'fails when updating with wrong ranking rules name' do
+      expect {
+        index.update_ranking_rules(wrong_ranking_rules)
+      }.to raise_meilisearch_http_error_with(400)
     end
 
     it 'resets ranking rules' do
