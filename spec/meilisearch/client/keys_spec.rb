@@ -41,8 +41,8 @@ RSpec.describe MeiliSearch::Client::Keys do
   end
 
   it 'succeeds to get settings when using private key' do
-    public_key = @client.keys['public']
-    new_client = MeiliSearch::Client.new($URL, public_key)
+    private_key = @client.keys['private']
+    new_client = MeiliSearch::Client.new($URL, private_key)
     response = new_client.index(@uid).settings
     expect(response).to have_key('rankingRules')
   end

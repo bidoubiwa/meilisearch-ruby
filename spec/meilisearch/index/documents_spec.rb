@@ -271,7 +271,7 @@ RSpec.describe MeiliSearch::Index::Documents do
     end
   end
 
-  context 'Wrong primary-key (field does not exist) added when pushing documents' do
+  context 'Wrong primary-key (attribute does not exist) added when pushing documents' do
     before(:all) do
       @uid = SecureRandom.hex(4)
       @client.create_index(@uid)
@@ -315,7 +315,7 @@ RSpec.describe MeiliSearch::Index::Documents do
     end
   end
 
-  context 'Wrong primary-key (field bad formatted) added when pushing documents' do
+  context 'Wrong primary-key (attribute bad formatted) added when pushing documents' do
     before(:all) do
       @uid = SecureRandom.hex(4)
       @client.create_index(@uid)
@@ -335,7 +335,7 @@ RSpec.describe MeiliSearch::Index::Documents do
       expect(response).to be_a(Hash)
       expect(response).to have_key('updateId')
       sleep(0.2)
-      expect(index.show['primaryKey']).to eq('objectId')
+      expect(index.show['primaryKey']).to eq('title')
       expect(index.get_update_status(response['updateId'])['status']).to eq('failed')
       expect(index.documents.count).to eq(0)
     end
@@ -381,7 +381,7 @@ RSpec.describe MeiliSearch::Index::Documents do
       expect(response).to be_a(Hash)
       expect(response).to have_key('updateId')
       sleep(0.2)
-      expect(index.show['primaryKey']).to eq('id')
+      expect(index.show['primaryKey']).to eq('unique')
       expect(index.documents.count).to eq(1)
     end
   end

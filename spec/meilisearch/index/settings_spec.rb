@@ -3,6 +3,7 @@
 RSpec.describe MeiliSearch::Index::Settings do
   before(:all) do
     @client = MeiliSearch::Client.new($URL, $API_KEY)
+    clear_all_indexes(@client)
   end
 
   let(:default_ranking_rules) do
