@@ -113,9 +113,9 @@ RSpec.describe MeiliSearch::Index::Settings do
     end
 
     it 'fails when updating with wrong ranking rules name' do
-      expect {
+      expect do
         index.update_ranking_rules(wrong_ranking_rules)
-      }.to raise_meilisearch_http_error_with(400)
+      end.to raise_meilisearch_http_error_with(400)
     end
 
     it 'resets ranking rules' do
