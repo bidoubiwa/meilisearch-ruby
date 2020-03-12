@@ -69,12 +69,13 @@ documents = [
   { id: 4,    title: 'Harry Potter and the Half-Blood Prince' },
   { id: 42,   title: 'The Hitchhiker\'s Guide to the Galaxy' }
 ]
-index.add_documents(documents) # => { "updateId": 1 }
+index.add_documents(documents) # => { "updateId": 0 }
 ```
 
-With the `updateId`, you can check the status of your documents addition thanks to this [method](https://github.com/meilisearch/meilisearch-ruby#update-status).
+With the `updateId`, you can check the status (`processed` of `failed`) of your documents addition thanks to this [method](#update-status).
 
 #### Search in index <!-- omit in toc -->
+
 ``` ruby
 # MeiliSearch is typo-tolerant:
 puts index.search('hary pottre')
@@ -101,6 +102,7 @@ You can check out [the API documentation](https://docs.meilisearch.com/reference
 ### Indexes
 
 #### Create an index <!-- omit in toc -->
+
 ```ruby
 # Create an index
 client.create_index('books')
@@ -109,11 +111,13 @@ client.create_index(uid: 'books', primaryKey: 'objectID')
 ```
 
 #### List all indexes <!-- omit in toc -->
+
 ```ruby
 client.indexes
 ```
 
 #### Get an index object <!-- omit in toc -->
+
 ```ruby
 client.index('books')
 ```
@@ -121,13 +125,16 @@ client.index('books')
 ### Documents
 
 #### Fetch documents <!-- omit in toc -->
+
 ```ruby
 # Get one document
 index.document(123)
 # Get documents by batch
 index.documents(offset: 10 , limit: 20)
 ```
+
 #### Add documents <!-- omit in toc -->
+
 ```ruby
 index.add_documents({ id: 2, title: 'Madame Bovary' })
 ```
@@ -141,6 +148,7 @@ Response:
 With this `updateId` you can track your [operation update](#update-status).
 
 #### Delete documents <!-- omit in toc -->
+
 ```ruby
 # Delete one document
 index.delete_document(2)
@@ -225,10 +233,11 @@ $ bundle install
 
 ### Tests and Linter
 
-The PR should pass both of theses tests to be accepted.
+Each PR should pass the tests and the linter to be accepted.
 
 ```bash
 # Tests
+$ docker run -d -p 7700:7700 getmeili/meilisearch:latest ./meilisearch --master-key=masterKey --no-analytics
 $ bundle exec rspec
 # Linter
 $ bundle exec rubocop lib/ spec/
@@ -240,13 +249,21 @@ $ bundle exec rubocop -a lib/ spec/
 
 MeiliSearch tools follow the [Semantic Versioning Convention](https://semver.org/).
 
-You must modify the file `lib/meilisearch/version.rb` with the right version.<br>
+You must do a PR modifying the file `lib/meilisearch/version.rb` with the right version.<br>
 
 ```ruby
 VERSION = 'X.X.X'
 ```
 
-Then, you must be on `master` branch and push a new tag with the right version.<br>
+Once the changes are merged on `master`, in your terminal, you must be on the `master` branch and push a new tag with the right version:
+
+```bash
+$ git checkout master
+$ git pull origin master
+$ git tag vX.X.X
+$ git push --tag origin master
+```
+
 A GitHub Action will be triggered and push the new gem on [RubyGems](https://rubygems.org/gems/meilisearch).
 
 ## 🤖 Compatibility with MeiliSearch
